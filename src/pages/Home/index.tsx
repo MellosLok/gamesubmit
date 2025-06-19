@@ -1,0 +1,146 @@
+import React, { useState } from 'react';
+import { Card, Typography, Button, Space, Steps, Result } from 'antd';
+import { CheckCircleOutlined, ClockCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { useAuth } from '../../contexts/AuthContext';
+import { UserStatus } from '../../types';
+import SignupForm from '../../components/SignupForm';
+import GameForm from '../../components/GameForm';
+
+const { Title } = Typography;
+
+const Home: React.FC = () => {
+  const { user } = useAuth();
+  const [showSignupForm, setShowSignupForm] = useState(false);
+  const [showGameForm, setShowGameForm] = useState(false);
+
+  if (!user) {
+    return null; // 用户未登录时，由App组件显示登录页面
+  }
+
+  const getCurrentStep = () => {
+    switch (user.status) {
+      case UserStatus.NOT_SIGNED_UP:
+        return 0;
+      case UserStatus.SIGNED_UP_NO_GAME:
+        return 1;
+      case UserStatus.SIGNED_UP_WITH_GAME:
+        return 2;
+      default:
+        return 0;
+    }
+  };
+
+  const getStepItems = () => [
+    {
+      title: '报名信息',
+      description: '填写基本信息',
+      icon: <UserOutlined />,
+    },
+    {
+      title: '游戏信息',
+      description: '提交游戏详情',
+      icon: <ClockCircleOutlined />,
+    },
+    {
+      title: '完成',
+      description: '报名成功',
+      icon: <CheckCircleOutlined />,
+    },
+  ];
+
+  const renderContent = () => {
+    if (showSignupForm) {
+      return (
+        <SignupForm
+          onSuccess={() => {
+            setShowSignupForm(false);
+          }}
+        />
+      );
+    }
+
+    if (showGameForm) {
+      return (
+        <GameForm
+          onSuccess={() => {
+            setShowGameForm(false);
+          }}
+        />
+      );
+    }
+
+    switch (user.status) {
+      case UserStatus.NOT_SIGNED_UP:
+        return (
+          <Result
+            icon={<UserOutlined style={{ color: '#1890ff' }} />}
+            title="欢迎参加GameJam！"
+            subTitle="请先填写报名信息，然后提交游戏详情"
+            extra={
+              <Button type="primary" size="large" onClick={() => setShowSignupForm(true)}>
+                开始报名
+              </Button>
+            }
+          />
+        );
+
+      case UserStatus.SIGNED_UP_NO_GAME:
+        return (
+          <Result
+            icon={<ClockCircleOutlined style={{ color: '#faad14' }} />}
+            title="报名成功！"
+            subTitle="您已成功报名，请在征集结束前提交游戏信息"
+            extra={
+              <Space>
+                <Button type="primary" size="large" onClick={() => setShowGameForm(true)}>
+                  提交游戏信息
+                </Button>
+                <Button size="large" onClick={() => setShowSignupForm(true)}>
+                  修改报名信息
+                </Button>
+              </Space>
+            }
+          />
+        );
+
+      case UserStatus.SIGNED_UP_WITH_GAME:
+        return (
+          <Result
+            icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
+            title="报名完成！"
+            subTitle={`您正在以【${user.gameInfo?.gameName}】-【${user.gameInfo?.publisherName}】参加本期征集活动`}
+            extra={
+              <Space>
+                <Button type="primary" size="large" onClick={() => setShowGameForm(true)}>
+                  修改游戏信息
+                </Button>
+                <Button size="large" onClick={() => setShowSignupForm(true)}>
+                  修改报名信息
+                </Button>
+              </Space>
+            }
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div>
+      <Card style={{ marginBottom: 24 }}>
+        <Title level={3}>报名进度</Title>
+        <Steps
+          current={getCurrentStep()}
+          items={getStepItems()}
+          style={{ marginTop: 16 }}
+        />
+      </Card>
+
+      {renderContent()}
+    </div>
+  );
+};
+
+export default Home; 
