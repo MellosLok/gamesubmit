@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, InputNumber, Button, Card, Typography, message } from 'antd';
+import { Form, Input, InputNumber, Button, Card, Typography, message, Modal } from 'antd';
 import { UserOutlined, PhoneOutlined, WechatOutlined, TeamOutlined } from '@ant-design/icons';
 import { SignupFormData } from '../../types';
 import { signupAPI } from '../../services/api';
@@ -14,7 +14,24 @@ interface SignupFormProps {
 const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [confirmData, setConfirmData] = useState<SignupFormData | null>(null);
   const { user, refreshUser } = useAuth();
+
+  // 检查是否为编辑模式
+  const isEditMode = user?.signupData && user?.status !== 'not_signed_up';
+
+  // 初始化表单数据
+  React.useEffect(() => {
+    if (isEditMode && user?.signupData) {
+      form.setFieldsValue({
+        tapId: user.signupData.tapId,
+        phone: user.signupData.phone,
+        wechat: user.signupData.wechat,
+        teamSize: user.signupData.teamSize,
+      });
+    }
+  }, [isEditMode, user?.signupData, form]);
 
   const handleSubmit = async (values: SignupFormData) => {
     if (!user) {
@@ -22,17 +39,23 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
       return;
     }
 
+    // 显示确认弹框
+    setConfirmData({
+      ...values,
+      tapId: user.userInfo.tapId,
+    });
+    setShowConfirm(true);
+  };
+
+  const handleConfirmSubmit = async () => {
+    if (!confirmData) return;
+
     setLoading(true);
     try {
-      const formData: SignupFormData = {
-        ...values,
-        tapId: user.userInfo.tapId,
-      };
-
-      const response = await signupAPI.submitSignup(formData);
+      const response = await signupAPI.submitSignup(confirmData);
       
       if (response.success) {
-        message.success('报名成功！');
+        message.success(isEditMode ? '报名信息修改成功！' : '报名成功！');
         await refreshUser();
         onSuccess();
       } else {
@@ -43,14 +66,39 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
       message.error('报名失败，请重试');
     } finally {
       setLoading(false);
+      setShowConfirm(false);
     }
+  };
+
+  const renderConfirmModal = () => {
+    if (!confirmData) return null;
+    
+    return (
+      <Modal
+        title={isEditMode ? "确认修改报名信息" : "确认报名信息"}
+        open={showConfirm}
+        onOk={handleConfirmSubmit}
+        onCancel={() => setShowConfirm(false)}
+        okText="确认提交"
+        cancelText="取消"
+        confirmLoading={loading}
+        width={500}
+      >
+        <div style={{ lineHeight: 2 }}>
+          <div><strong>Tap ID：</strong>{confirmData.tapId}</div>
+          <div><strong>手机号：</strong>{confirmData.phone}</div>
+          <div><strong>微信号：</strong>{confirmData.wechat}</div>
+          <div><strong>团队人数：</strong>{confirmData.teamSize}人</div>
+        </div>
+      </Modal>
+    );
   };
 
   return (
     <Card>
       <div style={{ textAlign: 'center', marginBottom: 24 }}>
-        <Title level={2}>GameJam 报名表单</Title>
-        <Text type="secondary">请填写以下信息完成报名</Text>
+        <Title level={2}>报名信息</Title>
+        <Text type="secondary">{isEditMode ? '修改报名信息' : '填写基本信息完成报名'}</Text>
       </div>
 
       <Form
@@ -75,7 +123,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
         </Form.Item>
 
         <Form.Item
-          label="联系人手机号"
+          label="手机号"
           name="phone"
           rules={[
             { required: true, message: '请输入手机号' },
@@ -90,7 +138,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
         </Form.Item>
 
         <Form.Item
-          label="联系人微信号"
+          label="微信号"
           name="wechat"
           rules={[
             { required: true, message: '请输入微信号' },
@@ -104,7 +152,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
         </Form.Item>
 
         <Form.Item
-          label="团队人数预估"
+          label="团队人数"
           name="teamSize"
           rules={[
             { required: true, message: '请输入团队人数' },
@@ -124,14 +172,15 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
           <Button 
             type="primary" 
             htmlType="submit" 
-            loading={loading}
             size="large"
             style={{ width: '100%' }}
           >
-            提交报名
+            {isEditMode ? '保存修改' : '提交报名'}
           </Button>
         </Form.Item>
       </Form>
+
+      {renderConfirmModal()}
     </Card>
   );
 };

@@ -31,21 +31,6 @@ const Header: React.FC = () => {
     },
   ];
 
-  const getStatusText = () => {
-    if (!user) return '';
-    
-    switch (user.status) {
-      case 'not_signed_up':
-        return '未报名';
-      case 'signed_up_no_game':
-        return '已报名，待提交游戏';
-      case 'signed_up_with_game':
-        return `正在以【${user.gameInfo?.gameName}】-【${user.gameInfo?.publisherName}】参加`;
-      default:
-        return '';
-    }
-  };
-
   return (
     <AntHeader style={{ 
       background: '#fff', 
@@ -57,31 +42,31 @@ const Header: React.FC = () => {
     }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Typography.Title level={3} style={{ margin: 0, color: '#1890ff' }}>
-          GameJam 报名系统
+          聚光灯 · 主题游戏创作征集
         </Typography.Title>
+        <div style={{ marginLeft: 24, display: 'flex', alignItems: 'center' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#1890ff' }}>
+            S1 | 7月18日 - 10月22日
+          </Text>
+        </div>
       </div>
       
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         {user && (
-          <>
-            <Text type="secondary" style={{ fontSize: 14 }}>
-              {getStatusText()}
-            </Text>
-            <Dropdown
-              menu={{ items: userMenuItems }}
-              placement="bottomRight"
-              arrow
-            >
-              <Space style={{ cursor: 'pointer' }}>
-                <Avatar 
-                  src={user.userInfo.avatar} 
-                  icon={<UserOutlined />}
-                  size="small"
-                />
-                <Text>{user.userInfo.username}</Text>
-              </Space>
-            </Dropdown>
-          </>
+          <Dropdown
+            menu={{ items: userMenuItems }}
+            placement="bottomRight"
+            arrow
+          >
+            <Space style={{ cursor: 'pointer' }}>
+              <Avatar 
+                src={user.userInfo.avatar} 
+                icon={<UserOutlined />}
+                size="small"
+              />
+              <Text>{user.userInfo.username}</Text>
+            </Space>
+          </Dropdown>
         )}
       </div>
     </AntHeader>

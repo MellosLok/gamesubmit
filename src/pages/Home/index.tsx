@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { UserStatus } from '../../types';
 import SignupForm from '../../components/SignupForm';
 import GameForm from '../../components/GameForm';
+import AllInfoModal from '../../components/AllInfoModal';
 
 const { Title } = Typography;
 
@@ -12,6 +13,7 @@ const Home: React.FC = () => {
   const { user } = useAuth();
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [showGameForm, setShowGameForm] = useState(false);
+  const [showAllInfo, setShowAllInfo] = useState(false);
 
   if (!user) {
     return null; // 用户未登录时，由App组件显示登录页面
@@ -32,18 +34,15 @@ const Home: React.FC = () => {
 
   const getStepItems = () => [
     {
-      title: '报名信息',
-      description: '填写基本信息',
+      title: '登记信息',
       icon: <UserOutlined />,
     },
     {
-      title: '游戏信息',
-      description: '提交游戏详情',
+      title: '投稿游戏',
       icon: <ClockCircleOutlined />,
     },
     {
       title: '完成',
-      description: '报名成功',
       icon: <CheckCircleOutlined />,
     },
   ];
@@ -74,11 +73,11 @@ const Home: React.FC = () => {
         return (
           <Result
             icon={<UserOutlined style={{ color: '#1890ff' }} />}
-            title="欢迎参加GameJam！"
-            subTitle="请先填写报名信息，然后提交游戏详情"
+            title="开始报名"
+            subTitle="填写基本信息，提交游戏详情"
             extra={
               <Button type="primary" size="large" onClick={() => setShowSignupForm(true)}>
-                开始报名
+                填写报名信息
               </Button>
             }
           />
@@ -88,12 +87,12 @@ const Home: React.FC = () => {
         return (
           <Result
             icon={<ClockCircleOutlined style={{ color: '#faad14' }} />}
-            title="报名成功！"
-            subTitle="您已成功报名，请在征集结束前提交游戏信息"
+            title="报名成功"
+            subTitle="请在征集结束前登记投稿游戏"
             extra={
               <Space>
                 <Button type="primary" size="large" onClick={() => setShowGameForm(true)}>
-                  提交游戏信息
+                  登记投稿游戏
                 </Button>
                 <Button size="large" onClick={() => setShowSignupForm(true)}>
                   修改报名信息
@@ -107,17 +106,12 @@ const Home: React.FC = () => {
         return (
           <Result
             icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
-            title="报名完成！"
-            subTitle={`您正在以【${user.gameInfo?.gameName}】-【${user.gameInfo?.publisherName}】参加本期征集活动`}
+            title="报名完成"
+            subTitle={`游戏：${user.gameInfo?.gameName} | 厂商：${user.gameInfo?.publisherName}`}
             extra={
-              <Space>
-                <Button type="primary" size="large" onClick={() => setShowGameForm(true)}>
-                  修改游戏信息
-                </Button>
-                <Button size="large" onClick={() => setShowSignupForm(true)}>
-                  修改报名信息
-                </Button>
-              </Space>
+              <Button type="primary" size="large" onClick={() => setShowAllInfo(true)}>
+                查看报名信息
+              </Button>
             }
           />
         );
@@ -139,6 +133,10 @@ const Home: React.FC = () => {
       </Card>
 
       {renderContent()}
+      <AllInfoModal 
+        open={showAllInfo} 
+        onClose={() => setShowAllInfo(false)} 
+      />
     </div>
   );
 };

@@ -1,8 +1,9 @@
 {
-  "name": "gamejam-signup",
+  "name": "spotlight-gamejam-signup",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "聚光灯 · 主题游戏创作征集报名系统",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -12,13 +12,18 @@ let mockUser: UserProfile | null = null;
 
 // 模拟游戏数据
 const mockGames = [
-  { id: 'game001', name: '超级冒险', publisher: '游戏工作室A' },
-  { id: 'game002', name: '魔法世界', publisher: '游戏工作室B' },
-  { id: 'game003', name: '赛车竞速', publisher: '游戏工作室C' },
+  { id: '12345', name: '超级冒险', publisher: '游戏工作室A' },
+  { id: '23456', name: '魔法世界', publisher: '游戏工作室B' },
+  { id: '34567', name: '赛车竞速', publisher: '游戏工作室C' },
 ];
 
 // 模拟API延迟
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// 生成8位纯数字Tap ID
+const generateTapId = (): string => {
+  return Math.floor(10000000 + Math.random() * 90000000).toString();
+};
 
 // 模拟Tap登录
 export const mockTapLogin = async (): Promise<ApiResponse<{ token: string; user: UserProfile }>> => {
@@ -27,7 +32,7 @@ export const mockTapLogin = async (): Promise<ApiResponse<{ token: string; user:
   // 模拟用户信息
   const user: UserProfile = {
     userInfo: {
-      tapId: 'tap_' + Math.random().toString(36).substr(2, 9),
+      tapId: generateTapId(),
       username: '测试用户' + Math.floor(Math.random() * 1000),
       avatar: 'https://via.placeholder.com/40',
     },

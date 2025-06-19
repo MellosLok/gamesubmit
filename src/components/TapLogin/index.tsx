@@ -27,12 +27,16 @@ const TapLogin: React.FC = () => {
   };
 
   return (
-    <Card style={{ maxWidth: 400, margin: '100px auto', textAlign: 'center' }}>
+    <Card style={{ maxWidth: 500, margin: '100px auto', textAlign: 'center' }}>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
           <UserOutlined style={{ fontSize: 48, color: '#1890ff', marginBottom: 16 }} />
-          <Title level={2}>GameJam 报名系统</Title>
-          <Text type="secondary">请使用Tap账号登录</Text>
+          <Title level={2}>聚光灯 · 主题游戏创作征集</Title>
+          <div style={{ marginBottom: 16 }}>
+            <Text type="secondary" style={{ fontSize: 20, fontWeight: 'bold' }}>
+              S1 | 7月18日 - 10月22日
+            </Text>
+          </div>
         </div>
 
         <Button
@@ -43,11 +47,11 @@ const TapLogin: React.FC = () => {
           onClick={handleTapLogin}
           style={{ width: '100%' }}
         >
-          使用Tap账号登录
+          点击参与
         </Button>
 
         <div style={{ fontSize: 12, color: '#999' }}>
-          <Text>登录后即可参与GameJam报名</Text>
+          <Text>需要使用Tap账号登录</Text>
         </div>
       </Space>
     </Card>
