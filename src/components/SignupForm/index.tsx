@@ -97,7 +97,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSuccess }) => {
   return (
     <Card>
       <div style={{ textAlign: 'center', marginBottom: 24 }}>
-        <Title level={2}>报名信息</Title>
+        <Title level={2}>基本信息</Title>
         <Text type="secondary">{isEditMode ? '修改报名信息' : '填写基本信息完成报名'}</Text>
       </div>
 

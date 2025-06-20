@@ -107,7 +107,7 @@ const Home: React.FC = () => {
           <Result
             icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
             title="报名完成"
-            subTitle={`游戏：${user.gameInfo?.gameName} | 厂商：${user.gameInfo?.publisherName}`}
+            subTitle={`您正在以【${user.gameInfo?.gameName} - ${user.gameInfo?.publisherName}】参加本期征集活动。请在征集期内在TapTap正式上架游戏，部分活动奖励将根据游戏在征集期内的数据情况核算发放。`}
             extra={
               <Button type="primary" size="large" onClick={() => setShowAllInfo(true)}>
                 查看报名信息
