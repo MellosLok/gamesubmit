@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Typography, Space, message, Row, Col, Divider } from 'antd';
+import { Card, Button, Typography, Space, message, Divider } from 'antd';
 import { LoginOutlined, ClockCircleOutlined, TrophyOutlined, TeamOutlined } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -71,158 +71,152 @@ const TapLogin: React.FC = () => {
         </Text>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 20px' }}>
-        <Row gutter={[32, 32]}>
-          {/* 左侧：倒计时和参与按钮 */}
-          <Col xs={24} lg={12}>
-            <Card style={{ height: '100%', background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)' }}>
-              {/* 倒计时 */}
-              <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                <Title level={3} style={{ marginBottom: 16 }}>
-                  <ClockCircleOutlined style={{ marginRight: 8, color: '#1890ff' }} />
-                  征集结束倒计时
-                </Title>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: 16 }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ 
-                      fontSize: 32, 
-                      fontWeight: 'bold', 
-                      color: '#1890ff',
-                      background: '#f0f8ff',
-                      padding: '12px 16px',
-                      borderRadius: 8,
-                      minWidth: 80
-                    }}>
-                      {timeLeft.days}
-                    </div>
-                    <Text style={{ fontSize: 14, color: '#666' }}>天</Text>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ 
-                      fontSize: 32, 
-                      fontWeight: 'bold', 
-                      color: '#1890ff',
-                      background: '#f0f8ff',
-                      padding: '12px 16px',
-                      borderRadius: 8,
-                      minWidth: 80
-                    }}>
-                      {timeLeft.hours}
-                    </div>
-                    <Text style={{ fontSize: 14, color: '#666' }}>时</Text>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ 
-                      fontSize: 32, 
-                      fontWeight: 'bold', 
-                      color: '#1890ff',
-                      background: '#f0f8ff',
-                      padding: '12px 16px',
-                      borderRadius: 8,
-                      minWidth: 80
-                    }}>
-                      {timeLeft.minutes}
-                    </div>
-                    <Text style={{ fontSize: 14, color: '#666' }}>分</Text>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ 
-                      fontSize: 32, 
-                      fontWeight: 'bold', 
-                      color: '#1890ff',
-                      background: '#f0f8ff',
-                      padding: '12px 16px',
-                      borderRadius: 8,
-                      minWidth: 80
-                    }}>
-                      {timeLeft.seconds}
-                    </div>
-                    <Text style={{ fontSize: 14, color: '#666' }}>秒</Text>
-                  </div>
-                </div>
-              </div>
-
-              <Divider />
-
-              {/* 参与按钮 */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
+        {/* 倒计时和参与按钮 */}
+        <Card style={{ marginBottom: 32, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)' }}>
+          {/* 倒计时 */}
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <Title level={3} style={{ marginBottom: 16 }}>
+              <ClockCircleOutlined style={{ marginRight: 8, color: '#1890ff' }} />
+              征集结束倒计时
+            </Title>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
               <div style={{ textAlign: 'center' }}>
-                <Button
-                  type="primary"
-                  size="large"
-                  icon={<LoginOutlined />}
-                  loading={loading}
-                  onClick={handleTapLogin}
-                  style={{ 
-                    width: '100%', 
-                    height: 60, 
-                    fontSize: 18,
-                    background: 'linear-gradient(45deg, #1890ff, #722ed1)',
-                    border: 'none',
-                    borderRadius: 12
-                  }}
-                >
-                  立即参与征集
-                </Button>
-                <div style={{ marginTop: 16, fontSize: 14, color: '#666' }}>
-                  <Text>需要使用Tap账号登录</Text>
+                <div style={{ 
+                  fontSize: 32, 
+                  fontWeight: 'bold', 
+                  color: '#1890ff',
+                  background: '#f0f8ff',
+                  padding: '12px 16px',
+                  borderRadius: 8,
+                  minWidth: 80
+                }}>
+                  {timeLeft.days}
                 </div>
+                <Text style={{ fontSize: 14, color: '#666' }}>天</Text>
               </div>
-            </Card>
-          </Col>
-
-          {/* 右侧：活动介绍 */}
-          <Col xs={24} lg={12}>
-            <Card style={{ height: '100%', background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)' }}>
-              <Space direction="vertical" size="large" style={{ width: '100%' }}>
-                {/* 活动介绍 */}
-                <div>
-                  <Title level={4}>
-                    <TrophyOutlined style={{ marginRight: 8, color: '#faad14' }} />
-                    活动介绍
-                  </Title>
-                  <Paragraph style={{ fontSize: 16, lineHeight: 1.8 }}>
-                    定期面向所有开发者举办的主题游戏征集活动，开发者可随时加入，自由投稿游戏，并获得TapTap提供的流量扶持。
-                  </Paragraph>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  fontSize: 32, 
+                  fontWeight: 'bold', 
+                  color: '#1890ff',
+                  background: '#f0f8ff',
+                  padding: '12px 16px',
+                  borderRadius: 8,
+                  minWidth: 80
+                }}>
+                  {timeLeft.hours}
                 </div>
-
-                {/* 参与规则 */}
-                <div>
-                  <Title level={4}>
-                    <TeamOutlined style={{ marginRight: 8, color: '#52c41a' }} />
-                    参与规则
-                  </Title>
-                  <div style={{ fontSize: 15, lineHeight: 1.8 }}>
-                    <ul style={{ paddingLeft: 20 }}>
-                      <li>参赛者需使用Tap账号登录报名</li>
-                      <li>游戏作品需围绕指定主题进行创作</li>
-                      <li>作品需在10月22日前完成并提交，提交时间越早，获得扶持机会越大</li>
-                      <li>参赛作品需遵守相关法规和平台规范</li>
-                    </ul>
-                  </div>
+                <Text style={{ fontSize: 14, color: '#666' }}>时</Text>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  fontSize: 32, 
+                  fontWeight: 'bold', 
+                  color: '#1890ff',
+                  background: '#f0f8ff',
+                  padding: '12px 16px',
+                  borderRadius: 8,
+                  minWidth: 80
+                }}>
+                  {timeLeft.minutes}
                 </div>
-
-                {/* 奖励说明 */}
-                <div>
-                  <Title level={4}>
-                    <TrophyOutlined style={{ marginRight: 8, color: '#eb2f96' }} />
-                    奖励说明
-                  </Title>
-                  <Text>
-                    XXXXXXXXXXX
-                  </Text>
+                <Text style={{ fontSize: 14, color: '#666' }}>分</Text>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  fontSize: 32, 
+                  fontWeight: 'bold', 
+                  color: '#1890ff',
+                  background: '#f0f8ff',
+                  padding: '12px 16px',
+                  borderRadius: 8,
+                  minWidth: 80
+                }}>
+                  {timeLeft.seconds}
                 </div>
+                <Text style={{ fontSize: 14, color: '#666' }}>秒</Text>
+              </div>
+            </div>
+          </div>
 
-                {/* 更多详情 */}
-                <div>
-                  <Title level={4}>更多详情</Title>
-                  <Text>
-                    <a href="#" style={{ color: '#1890ff', fontSize: 16 }}>点击查看详细活动规则</a>
-                  </Text>
-                </div>
-              </Space>
-            </Card>
-          </Col>
-        </Row>
+          <Divider />
+
+          {/* 参与按钮 */}
+          <div style={{ textAlign: 'center' }}>
+            <Button
+              type="primary"
+              size="large"
+              icon={<LoginOutlined />}
+              loading={loading}
+              onClick={handleTapLogin}
+              style={{ 
+                width: '100%', 
+                height: 60, 
+                fontSize: 18,
+                background: 'linear-gradient(45deg, #1890ff, #722ed1)',
+                border: 'none',
+                borderRadius: 12
+              }}
+            >
+              立即参与征集
+            </Button>
+            <div style={{ marginTop: 16, fontSize: 14, color: '#666' }}>
+              <Text>需要使用Tap账号登录</Text>
+            </div>
+          </div>
+        </Card>
+
+        {/* 活动介绍 */}
+        <Card style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)' }}>
+          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            {/* 活动介绍 */}
+            <div>
+              <Title level={4}>
+                <TrophyOutlined style={{ marginRight: 8, color: '#faad14' }} />
+                活动介绍
+              </Title>
+              <Paragraph style={{ fontSize: 16, lineHeight: 1.8 }}>
+                定期面向所有开发者举办的主题游戏征集活动，开发者可随时加入，自由投稿游戏，并获得TapTap提供的流量扶持。
+              </Paragraph>
+            </div>
+
+            {/* 参与规则 */}
+            <div>
+              <Title level={4}>
+                <TeamOutlined style={{ marginRight: 8, color: '#52c41a' }} />
+                参与规则
+              </Title>
+              <div style={{ fontSize: 15, lineHeight: 1.8 }}>
+                <ul style={{ paddingLeft: 20 }}>
+                  <li>参赛者需使用Tap账号登录报名</li>
+                  <li>游戏作品需围绕指定主题进行创作</li>
+                  <li>作品需在10月22日前完成并提交，提交时间越早，获得扶持机会越大</li>
+                  <li>参赛作品需遵守相关法规和平台规范</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 奖励说明 */}
+            <div>
+              <Title level={4}>
+                <TrophyOutlined style={{ marginRight: 8, color: '#eb2f96' }} />
+                奖励说明
+              </Title>
+              <Text>
+                XXXXXXXXXXX
+              </Text>
+            </div>
+
+            {/* 更多详情 */}
+            <div>
+              <Title level={4}>更多详情</Title>
+              <Text>
+                <a href="#" style={{ color: '#1890ff', fontSize: 16 }}>点击查看详细活动规则</a>
+              </Text>
+            </div>
+          </Space>
+        </Card>
       </div>
     </div>
   );
