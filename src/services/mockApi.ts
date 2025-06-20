@@ -17,6 +17,14 @@ const mockGames = [
   { id: '34567', name: '赛车竞速', publisher: '游戏工作室C' },
 ];
 
+// 模拟游戏权限数据（用户ID -> 有权限的游戏ID列表）
+const mockGamePermissions = {
+  // 假设当前用户只有前两个游戏的管理员权限
+  '12345': true,  // 有权限
+  '23456': true,  // 有权限
+  '34567': false, // 无权限
+};
+
 // 模拟API延迟
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -96,25 +104,41 @@ export const mockValidateGameId = async (gameId: string): Promise<ApiResponse<Ga
   
   const game = mockGames.find(g => g.id === gameId);
   
-  if (game) {
-    return {
-      success: true,
-      data: {
-        isValid: true,
-        gameName: game.name,
-        publisherName: game.publisher,
-        message: '验证成功',
-      },
-    };
-  } else {
+  if (!game) {
+    // 游戏ID不存在
     return {
       success: true,
       data: {
         isValid: false,
-        message: '游戏ID不存在或无权限访问',
+        message: '游戏ID不存在',
       },
     };
   }
+  
+  // 检查用户是否有该游戏的管理员权限
+  const hasPermission = mockGamePermissions[gameId as keyof typeof mockGamePermissions];
+  
+  if (!hasPermission) {
+    // 游戏存在但用户无权限
+    return {
+      success: true,
+      data: {
+        isValid: false,
+        message: '您所登录的TapTap账号并无该游戏的管理员权限',
+      },
+    };
+  }
+  
+  // 验证成功
+  return {
+    success: true,
+    data: {
+      isValid: true,
+      gameName: game.name,
+      publisherName: game.publisher,
+      message: '验证成功',
+    },
+  };
 };
 
 // 模拟提交游戏信息
