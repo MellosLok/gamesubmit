@@ -184,7 +184,12 @@ const GameForm: React.FC<GameFormProps> = ({ onSuccess }) => {
         onFinish={handleSubmit}
       >
         <Form.Item
-          label="游戏ID"
+          label={
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>游戏ID</span>
+              <a href="#" style={{ color: '#1890ff', fontSize: 12 }}>如何在TapTap创建游戏？</a>
+            </div>
+          }
           name="gameId"
           rules={[
             { required: true, message: '请输入游戏ID' },

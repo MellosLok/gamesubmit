@@ -52,6 +52,7 @@ const Header: React.FC = () => {
       </div>
       
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <a href="#" style={{ color: '#1890ff' }}>了解详情</a>
         {user && (
           <Dropdown
             menu={{ items: userMenuItems }}
