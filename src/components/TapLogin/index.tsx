@@ -74,95 +74,98 @@ const TapLogin: React.FC = () => {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
         {/* 倒计时和参与按钮 */}
         <Card style={{ marginBottom: 32, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)' }}>
-          {/* 倒计时 */}
-          <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <Title level={3} style={{ marginBottom: 16 }}>
-              <ClockCircleOutlined style={{ marginRight: 8, color: '#1890ff' }} />
-              征集结束倒计时
-            </Title>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ 
-                  fontSize: 32, 
-                  fontWeight: 'bold', 
-                  color: '#1890ff',
-                  background: '#f0f8ff',
-                  padding: '12px 16px',
-                  borderRadius: 8,
-                  minWidth: 80
-                }}>
-                  {timeLeft.days}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
+            {/* 倒计时 */}
+            <div style={{ flex: 1, minWidth: 300 }}>
+              <Title level={4} style={{ marginBottom: 12 }}>
+                <ClockCircleOutlined style={{ marginRight: 8, color: '#1890ff' }} />
+                离本期征集结束还有
+              </Title>
+              <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ 
+                    fontSize: 24, 
+                    fontWeight: 'bold', 
+                    color: '#1890ff',
+                    background: '#f0f8ff',
+                    padding: '8px 12px',
+                    borderRadius: 6,
+                    minWidth: 60
+                  }}>
+                    {timeLeft.days}
+                  </div>
+                  <Text style={{ fontSize: 12, color: '#666' }}>天</Text>
                 </div>
-                <Text style={{ fontSize: 14, color: '#666' }}>天</Text>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ 
-                  fontSize: 32, 
-                  fontWeight: 'bold', 
-                  color: '#1890ff',
-                  background: '#f0f8ff',
-                  padding: '12px 16px',
-                  borderRadius: 8,
-                  minWidth: 80
-                }}>
-                  {timeLeft.hours}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ 
+                    fontSize: 24, 
+                    fontWeight: 'bold', 
+                    color: '#1890ff',
+                    background: '#f0f8ff',
+                    padding: '8px 12px',
+                    borderRadius: 6,
+                    minWidth: 60
+                  }}>
+                    {timeLeft.hours}
+                  </div>
+                  <Text style={{ fontSize: 12, color: '#666' }}>时</Text>
                 </div>
-                <Text style={{ fontSize: 14, color: '#666' }}>时</Text>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ 
-                  fontSize: 32, 
-                  fontWeight: 'bold', 
-                  color: '#1890ff',
-                  background: '#f0f8ff',
-                  padding: '12px 16px',
-                  borderRadius: 8,
-                  minWidth: 80
-                }}>
-                  {timeLeft.minutes}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ 
+                    fontSize: 24, 
+                    fontWeight: 'bold', 
+                    color: '#1890ff',
+                    background: '#f0f8ff',
+                    padding: '8px 12px',
+                    borderRadius: 6,
+                    minWidth: 60
+                  }}>
+                    {timeLeft.minutes}
+                  </div>
+                  <Text style={{ fontSize: 12, color: '#666' }}>分</Text>
                 </div>
-                <Text style={{ fontSize: 14, color: '#666' }}>分</Text>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ 
-                  fontSize: 32, 
-                  fontWeight: 'bold', 
-                  color: '#1890ff',
-                  background: '#f0f8ff',
-                  padding: '12px 16px',
-                  borderRadius: 8,
-                  minWidth: 80
-                }}>
-                  {timeLeft.seconds}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ 
+                    fontSize: 24, 
+                    fontWeight: 'bold', 
+                    color: '#1890ff',
+                    background: '#f0f8ff',
+                    padding: '8px 12px',
+                    borderRadius: 6,
+                    minWidth: 60
+                  }}>
+                    {timeLeft.seconds}
+                  </div>
+                  <Text style={{ fontSize: 12, color: '#666' }}>秒</Text>
                 </div>
-                <Text style={{ fontSize: 14, color: '#666' }}>秒</Text>
               </div>
+              <Text style={{ fontSize: 14, color: '#666', lineHeight: 1.5 }}>
+                本期征集时间为2025年7月18日00:00 - 10月22日24:00，活动奖励将根据投稿游戏在该时间段内的数据表现进行结算。
+              </Text>
             </div>
-          </div>
 
-          <Divider />
-
-          {/* 参与按钮 */}
-          <div style={{ textAlign: 'center' }}>
-            <Button
-              type="primary"
-              size="large"
-              icon={<LoginOutlined />}
-              loading={loading}
-              onClick={handleTapLogin}
-              style={{ 
-                width: '100%', 
-                height: 60, 
-                fontSize: 18,
-                background: 'linear-gradient(45deg, #1890ff, #722ed1)',
-                border: 'none',
-                borderRadius: 12
-              }}
-            >
-              立即参与征集
-            </Button>
-            <div style={{ marginTop: 16, fontSize: 14, color: '#666' }}>
-              <Text>需要使用Tap账号登录</Text>
+            {/* 参与按钮 */}
+            <div style={{ flex: '0 0 auto', minWidth: 200 }}>
+              <Button
+                type="primary"
+                size="large"
+                icon={<LoginOutlined />}
+                loading={loading}
+                onClick={handleTapLogin}
+                style={{ 
+                  width: '100%', 
+                  height: 60, 
+                  fontSize: 18,
+                  background: 'linear-gradient(45deg, #1890ff, #722ed1)',
+                  border: 'none',
+                  borderRadius: 12
+                }}
+              >
+                立即参与征集
+              </Button>
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666', textAlign: 'center' }}>
+                <Text>需要使用Tap账号登录</Text>
+              </div>
             </div>
           </div>
         </Card>
