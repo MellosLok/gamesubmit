@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Typography, Space, message, Divider } from 'antd';
+import { Card, Button, Typography, Space, message } from 'antd';
 import { LoginOutlined, ClockCircleOutlined, TrophyOutlined, TeamOutlined } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
 
