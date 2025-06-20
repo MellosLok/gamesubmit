@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Typography, Space, message } from 'antd';
-import { LoginOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginOutlined } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
 
 const { Title, Text } = Typography;
